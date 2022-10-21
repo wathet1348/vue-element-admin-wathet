@@ -195,6 +195,7 @@ $light_gray:#eee;
     padding: 160px 35px 0;
     margin: 0 auto;
     overflow: hidden;
+
   }
 
   .tips {

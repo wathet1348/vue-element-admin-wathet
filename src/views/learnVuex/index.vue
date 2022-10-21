@@ -14,6 +14,10 @@
       <!-- 加上前缀调用模块里面方法 -->
       <el-button type="primary" size="default" @click="$store.commit('add',1)">加上前缀调用模块里面方法</el-button>
 
+      <p>学习icon图标的使用</p>
+      <div>
+        <svg-icon icon-class="eye" class-name="color-red"></svg-icon>
+      </div>
     </div>
   </div>
 </template>
@@ -52,5 +56,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-
+    .color-red {
+        color: red;
+    }
 </style>
