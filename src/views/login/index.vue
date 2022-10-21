@@ -196,6 +196,7 @@ $light_gray: #68b0fe;  // 将输入框颜色改成蓝色
     padding: 160px 35px 0;
     margin: 0 auto;
     overflow: hidden;
+
   }
 
   .tips {
