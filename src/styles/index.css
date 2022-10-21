@@ -1,0 +1,26 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    background:white;
+    margin:0rem;
+    min-height:100vh;
+    font-family:Futura, sans-serif;
+}
+#canvas, #text{
+    position:absolute;
+    display:block;
+    top:0;
+    left:0;
+    z-index:-1;
+}
+#text{
+  min-height:100vh;
+  width:100vw;
+  z-index:1;
+  text-align:center;
+}
+#text h1{
+    opacity:0.9
+}

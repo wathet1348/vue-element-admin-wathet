@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.3/vue.js"></script>
+</head>
+<body>
+<div id="app">
+  <button @click="add(this)">普通的html标签，不包含native的按钮</button><br/>
+  <button @click.native="add(this)">普通的html标签，包含native的按钮</button><br/>
+  <myself-button @click="add(this)"/></myself-button><br/>
+  <myself-button @click.native="add(this.id)"/></myself-button>
+  <div>
+</body>
+  <script>
+    Vue.component('myself-button', {
+        template: `<button>我是自定义的标签</button>`
+    });
+    var vm=new Vue({
+      el:"#app",
+      data:{
+      },
+      methods:{
+        add:function(obj){
+          console.log(obj+'我触发了');
+        },
+      }
+    });
+  </script>
+</html>
