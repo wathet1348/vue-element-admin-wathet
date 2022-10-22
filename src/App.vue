@@ -130,7 +130,7 @@ export default {
       }
 
       const canvasBody = document.querySelector('canvas')
-      console.log(canvasBody)
+      // console.log(canvasBody)
       const drawArea = canvasBody.getContext('2d')
       const delay = 200; let tid
       const rgb = opts.lineColor.match(/\d+/g)
@@ -143,8 +143,5 @@ export default {
 </script>
 
 <style lang="scss">
-  #app {
-      overflow-y:hidden;
-      overflow-x:hidden
-  }
+
 </style>

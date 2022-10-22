@@ -3,6 +3,7 @@
     padding: 0;
 }
 body{
+    overflow: hidden;
     background:white;
     margin:0rem;
     min-height:100vh;

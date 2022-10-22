@@ -26,11 +26,14 @@ const store = new Vuex.Store({
   // vuex的子模块
   // 分类管理代码, 有效防止index.js代码越来越多
   // 注册模块
+  // 5. 模块化vuex，可以让每一个模块拥有自己的 state、mutation、action、 getters，使得结构非常清晰，方便管理。
+
   modules: {
     app,
     settings,
     user
   },
+  // 4. 是state中数据的计算属性 - 类比computed
   getters
 })
 

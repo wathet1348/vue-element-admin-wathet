@@ -65,7 +65,7 @@ export default {
     return {
       loginForm: {
         mobile: '13800000002',
-        password: '111111'
+        password: '123456'
       },
       loginRules: {
         mobile: [
@@ -91,6 +91,7 @@ export default {
     }
   },
   methods: {
+    // 密码password的展示与显示
     showPwd() {
       if (this.passwordType === 'password') {
         this.passwordType = ''
@@ -101,16 +102,22 @@ export default {
         this.$refs.password.focus()
       })
     },
+    // 登录
     handleLogin() {
-      this.$refs.loginForm.validate(valid => {
+      this.$refs.loginForm.validate(async valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
-            this.$router.push({ path: this.redirect || '/' })
+          await this.$store.dispatch('user/login', this.loginForm).then(() => {
+            // this.$router.push({ path: this.redirect || '/' })
+            this.$route.push('/')
             this.loading = false
           }).catch(() => {
             this.loading = false
           })
+
+          // // 调用接口获取登录数据 测试后端是否解决了跨越问题
+          // const res = await loginAPI(this.loginForm)
+          // console.log(res)
         } else {
           console.log('error submit!!')
           return false
@@ -176,7 +183,7 @@ $cursor: #fff;
 <style lang="scss" scoped>
 // **`本节注意`**： 如需要在样式表中使用**`@`**别名的时候，需要在@前面加上一个**`~`**符号，否则不识别
 $bg:#2d3a4b;
-$dark_gray:#889aa4;
+$dark_gray:#0fa2f1;
 $light_gray: #68b0fe;  // 将输入框颜色改成蓝色
 
 .login-container {
@@ -201,7 +208,7 @@ $light_gray: #68b0fe;  // 将输入框颜色改成蓝色
 
   .tips {
     font-size: 14px;
-    color: #fff;
+    color: rgb(234, 0, 203);
     margin-bottom: 10px;
 
     span {

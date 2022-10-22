@@ -1,5 +1,5 @@
 // import axios from 'axios'
-// import { MessageBox, Message } from 'element-ui'
+import { Message } from 'element-ui'
 // import store from '@/store'
 // import { getToken } from '@/utils/auth'
 
@@ -86,23 +86,39 @@
 
 import axios from 'axios'
 const request = axios.create({
-  baseURL: ''
+  // baseURL: 'http://ihrm.itheima.net/prod-api'
+  // baseURL: 'http://ihrm-java.itheima.net/api'
+  baseURL: '/prod-api' // 完整地址:http:''localhost:8080/prod-api(DevServer地址)
 })
 // 通过拦截器,每次发送请求,都会调用方法
 // 通过扩展axios 代码片段airu快捷生成
-axios.interceptors.request.use(config => {
+request.interceptors.request.use(config => {
 // Do something before request is sent
+  console.log(333)
   return config
 }, error => {
 // Do something with request error
   return Promise.reject(error)
 })
 // 响应拦截器,每次响应返回,都会调用方法
-axios.interceptors.response.use(response => {
+request.interceptors.response.use(response => {
 // Do something before response is sent
-  return response
+  const { data: { data, success, message }} = response
+  if (success) {
+    // 返回最终数据
+    console.log(11)
+    console.log(data)
+    return data
+  } else {
+    // 提示错误信息
+    Message.error(message)
+    // 登录出错时抛出一个错误,不让页面发生跳转
+    throw new Error(message)
+  }
 }, error => {
 // Do something with response error
+  // 有报错,比如状态码错误
+  Message.error('服务器异常,请稍后重试')
   return Promise.reject(error)
 })
 export default request
