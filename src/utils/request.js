@@ -106,7 +106,6 @@ request.interceptors.response.use(response => {
   const { data: { data, success, message }} = response
   if (success) {
     // 返回最终数据
-    console.log(11)
     console.log(data)
     return data
   } else {
