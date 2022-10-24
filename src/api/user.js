@@ -1,5 +1,6 @@
 // 用户相关接口
-import request from '@/utils/request'
+import request from '@/utils/request.js'
+// import store from '@/store/index.js'
 
 /**
  * 用户登录
@@ -14,3 +15,28 @@ export const login = data => request({
   data
 })
 
+/**
+ * 获取用户基本信息
+ *
+ */
+export const getUserBaseInfo = () => request({
+  method: 'POST',
+  url: '/sys/profile'
+  // headers: {
+  //   Authorization: 'Bearer ' + store.state.user.token
+  // }
+})
+
+/**
+ * 获取员工基本信息
+ *
+ * @param : id  用户id
+ *
+ */
+export const getEmployeeBaseInfo = id => request({
+  method: 'GET',
+  url: '/sys/user/' + id
+  // headers: {
+  //   Authorization: 'Bearer ' + store.state.user.token
+  // }
+})

@@ -1,4 +1,4 @@
-import { loginAPI } from '@/api/index.js'
+import { getUserBaseInfoAPI, getEmployeeBaseInfoAPI, loginAPI } from '@/api/index.js'
 import { getToken, setToken, removeToken } from '@/utils/auth.js'
 // import { Message } from 'element-ui'
 
@@ -9,7 +9,9 @@ export default {
   // 定义vuex的用户模块
   // 1. 存储数据的地方 - 类比于vue文件的data()
   state: {
-    token: getToken()
+    token: getToken(),
+    // 定义用户信息的state
+    userInfo: {}
   },
   // 2. 外界修改store中state的属性值，必须通过mutations中设置的修改方法 - 类比methods
   // 注意：这里方法里面的代码和.vue文件中的书写方式有差异，注意区分
@@ -21,10 +23,25 @@ export default {
     removeToken(state) {
       state.token = undefined
       removeToken()
+    },
+    // 定义设置和清除的方法
+    setUserInfo(state, data) {
+      state.userInfo = data
+    },
+    removeUserInfo(state) {
+      state.userInfo = {}
     }
   },
   // 3. 涉及到异步操作后修改state数据时，必须先过actions中的自定义方法，通过actions去调用mutations中的方法
   actions: {
+    // 在action当中调用mutation
+    logout(context) {
+      // 删除登录产生的token
+      context.commit('removeToken')
+      // 删除用户信息
+      context.commit('removeUserInfo')
+    },
+    // 登录获取token
     async login(context, data) {
     /*  // 把处理放到响应拦截器中
       // 失败的处理
@@ -46,7 +63,18 @@ export default {
       const token = await loginAPI(data)
       console.log('token', token)
       context.commit('setToken', token)
+    },
+    // 获取用户基本信息
+    async getInfo(context) {
+      const userBaseInfo = await getUserBaseInfoAPI()
+      console.log(userBaseInfo)
+      const employeeBaseInfo = await getEmployeeBaseInfoAPI(userBaseInfo.userId)
+      console.log(employeeBaseInfo)
+      context.commit('setUserInfo', {
+        ...userBaseInfo, ...employeeBaseInfo
+      })
     }
+
   }
 
 }

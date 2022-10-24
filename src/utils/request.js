@@ -85,6 +85,7 @@ import { Message } from 'element-ui'
 // export default service
 
 import axios from 'axios'
+import store from '@/store'
 const request = axios.create({
   // baseURL: 'http://ihrm.itheima.net/prod-api'
   // baseURL: 'http://ihrm-java.itheima.net/api'
@@ -93,8 +94,11 @@ const request = axios.create({
 // 通过拦截器,每次发送请求,都会调用方法
 // 通过扩展axios 代码片段airu快捷生成
 request.interceptors.request.use(config => {
-// Do something before request is sent
-  console.log(333)
+  // 将用户请求的token写在请求拦截器里面
+  if (store.state.user.token) {
+    config.headers.Authorization = 'Bearer ' + store.state.user.token
+  }
+  // Do something before request is sent
   return config
 }, error => {
 // Do something with request error
@@ -106,7 +110,7 @@ request.interceptors.response.use(response => {
   const { data: { data, success, message }} = response
   if (success) {
     // 返回最终数据
-    console.log(data)
+    // console.log(data)
     return data
   } else {
     // 提示错误信息
@@ -116,6 +120,12 @@ request.interceptors.response.use(response => {
   }
 }, error => {
 // Do something with response error
+  // 处理token过期失效
+  if (error && error.response && error.response.status === 401) {
+    // token 过期 需要清除token, 再回到登录页面
+    store.dispatch('user/logout')
+    this.$router.push('/login')
+  }
   // 有报错,比如状态码错误
   Message.error('服务器异常,请稍后重试')
   return Promise.reject(error)

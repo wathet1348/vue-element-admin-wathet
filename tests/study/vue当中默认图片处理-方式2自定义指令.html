@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://lf6-cdn-tos.bytecdntp.com/cdn/expire-1-M/vue/2.6.14/vue.js" type="application/javascript"></script>
+</head>
+<body>
+  <div id="app">
+    <img id="img" ref="imgRef" src="http://localhost:8080/#/undefined" v-imgerror="https: img01.yzcdn.cn/vant/cat.jpeg">
+  </div>
+</body>
+<script>
+  Vue.directive('imgerror',{
+    inserted(el,binging){
+      console.log('binging',binging)
+      el.onerror = function () {
+        // this.src='https://img01.yzcdn.cn/vant/cat.jpeg'
+        this.src = binging.value
+      }
+    }
+  })
+new Vue({
+  el: '#app',
+  methods: {
+  },
+})
+</script>
+</html>

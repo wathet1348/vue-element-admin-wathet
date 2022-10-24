@@ -30,6 +30,7 @@ import Layout from '@/layout'
  * a base page that does not have permission requirements
  * all roles can be accessed
  */
+// 静态路由
 export const constantRoutes = [
   {
     path: '/login',
@@ -56,18 +57,40 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      meta: { title: '首页', icon: 'dashboard' }
     }]
   },
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
-
+// 为了方便维护代码
+// (1)动态路由,最后要通过过滤,每一个人用路由可以不一样
+// (2)路由模块化,把不同的路由,单独放在一个文件当中
+// 动态路由
+import employees from './modules/employees.js'
+import approvals from './modules/approvals.js'
+import attendances from './modules/attendances.js'
+import departments from './modules/departments.js'
+import permission from './modules/permission.js'
+import salarys from './modules/salarys.js'
+import setting from './modules/setting.js'
+import social from './modules/social.js'
+export const asyncRoutes = [
+  employees,
+  approvals,
+  attendances,
+  departments,
+  permission,
+  salarys,
+  setting,
+  social
+]
 const createRouter = () => new Router({
   // mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
-  routes: constantRoutes
+  // 把动态路由和静态路由简单做合并
+  routes: [...constantRoutes, ...asyncRoutes]
 })
 
 const router = createRouter()

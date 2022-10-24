@@ -19,6 +19,9 @@ import '@/permission' // permission control
 import '@/styles/index.css'
 import '@/styles/index.css'
 
+// 引入自定义指令
+import '@/directives'
+
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
