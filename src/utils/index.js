@@ -115,3 +115,17 @@ export function param2Obj(url) {
   })
   return obj
 }
+// 数据扁平化处理
+export function translateListToTree(l, pid) {
+  const arr = []
+  l.forEach(t => {
+    if (pid === t.pid) {
+      const children = translateListToTree(l, t.id)
+      if (children.length > 0) {
+        t.children = children
+      }
+      arr.push(t)
+    }
+  })
+  return arr
+}

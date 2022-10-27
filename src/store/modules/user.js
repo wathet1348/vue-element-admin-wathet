@@ -59,7 +59,7 @@ export default {
         Message.error('服务器异常,请稍后重试')
       }
       */
-      console.log(loginAPI)
+      // console.log(loginAPI)
       const token = await loginAPI(data)
       console.log('token', token)
       context.commit('setToken', token)

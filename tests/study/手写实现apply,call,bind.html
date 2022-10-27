@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+</body>
+<script>
+    // apply
+    Function.prototype.myApply = function (context, args) {
+	// 1. 判断args的类型，如果不是Array的实例，抛出一个TypeError；
+    if(!(args instanceof Array)){
+        throw new TypeError(`args is not an array!`)
+    }
+    // 2. 确定要绑定的对象，即最终谁来调用函数，命名为new_this；若没有传入要绑定的对象, 默认绑定window对象
+    const new_this = context || window
+    // 3. 把方法作为对象的属性绑定给new_this，但要注意,也许原有属性就有func,为了避免冲突，这里用symbol
+    const func = Symbol('func')
+    //由于这里func是Symbol变量不再是字符串，所以不能再用new_this.func而是要用中括号获取属性
+    //下面的this为调用我们正在写的myApply函数的函数，比如：fn1.myApply(context, args);此时this为fn1
+    new_this[func] = this
+    // 4. 执行当前函数，并获取返回值
+    const res = new_this[func](...args)
+    // 5. 删除我们绑定的的Symbol(func)属性，以免污染new_this的属性
+    delete new_this[func]
+	// 6. 返回第3步得到的返回值
+    return res
+}
+
+// call
+Function.prototype.myCall = function (context, ...args) {
+    // if(typeof this !== 'function'){ //不需要判断类型，因为myCall定义在Function.prototype上
+    //     throw new TypeError(`${this} is not a function!`)
+    // }
+    // 1. 确定要绑定的对象，即最终谁来调用函数，命名为new_this；若没有传入要绑定的对象, 默认绑定window对象
+    const new_this = context || window
+    // 2. 把方法作为对象的属性绑定给new_this，但要注意,也许原有属性就有func,为了避免冲突，这里用symbol
+    const func = Symbol('func')
+    //由于这里func是Symbol变量不再是字符串，所以不能再用new_this.func而是要用中括号获取属性
+    new_this[func] = this
+    // 3. 执行当前函数，并获取返回值
+    const res = new_this[func](...args)
+    // 4. 删除我们绑定的的Symbol(func)属性，以免污染new_this的属性
+    delete new_this[func]
+	// 5. 返回第3步得到的返回值
+    return res
+}
+
+// bind
+Function.prototype.myBind = function (context, ...args) {
+    // 1. 确定要绑定的对象，即最终谁来调用函数，命名为new_this；若没有传入要绑定的对象, 默认绑定window对象
+    context = context || window
+    // 2. 把原函数(即this)用一个fn变量保存一下，这样更能看出它表示一个函数
+    let fn = this
+    return function newFn (...fnArgs) {
+      let res
+      // 3.要考虑新函数是不是会当作构造函数
+      if (this instanceof newFn) {
+        // 如果是构造函数则调用new 并且合并参数args，fnArgs
+        res = new fn(...args, ...fnArgs)
+      } else {
+        // 当作普通函数调用 也可以用上面定义的myCall
+        res = fn.call(context, ...args, ...fnArgs)
+      }
+      return res
+    }
+  }
+</script>
+</html>

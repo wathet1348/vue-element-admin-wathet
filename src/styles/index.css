@@ -3,7 +3,8 @@
     padding: 0;
 }
 body{
-    overflow: hidden;
+    /* overflow: hidden; */
+    overflow-x: hidden;
     background:white;
     margin:0rem;
     min-height:100vh;
