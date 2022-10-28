@@ -89,7 +89,7 @@ import store from '@/store'
 const request = axios.create({
   // baseURL: 'http://ihrm.itheima.net/prod-api'
   // baseURL: 'http://ihrm-java.itheima.net/api'
-  baseURL: '/prod-api' // 完整地址:http:''localhost:8080/prod-api(DevServer地址)
+  baseURL: '/api' // 完整地址:http:''localhost:8080/prod-api(DevServer地址)
 })
 // 通过拦截器,每次发送请求,都会调用方法
 // 通过扩展axios 代码片段airu快捷生成

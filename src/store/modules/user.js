@@ -61,15 +61,15 @@ export default {
       */
       // console.log(loginAPI)
       const token = await loginAPI(data)
-      console.log('token', token)
+      // console.log('token', token)
       context.commit('setToken', token)
     },
     // 获取用户基本信息
     async getInfo(context) {
       const userBaseInfo = await getUserBaseInfoAPI()
-      console.log(userBaseInfo)
+      // console.log(userBaseInfo)
       const employeeBaseInfo = await getEmployeeBaseInfoAPI(userBaseInfo.userId)
-      console.log(employeeBaseInfo)
+      // console.log(employeeBaseInfo)
       context.commit('setUserInfo', {
         ...userBaseInfo, ...employeeBaseInfo
       })

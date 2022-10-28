@@ -16,7 +16,7 @@ const store = new Vuex.Store({
   mutations: {
     // 同步代码
     add(state, num) {
-      console.log('根模块的add方法')
+      // console.log('根模块的add方法')
       state.count += num
     }
   },
